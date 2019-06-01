@@ -1,6 +1,9 @@
+import random
+import string
+
 def encrypt(fileData, fileKey):
     outPut = ""
-    keyArray = list(fileKey)
+    keyArray = list(fileKey.lower())
     j = 0
     append = ""
     for i in fileData:
@@ -41,7 +44,7 @@ def encrypt(fileData, fileKey):
     
 def decrypt(fileData, fileKey):
     outPut = ""
-    keyArray = list(fileKey)
+    keyArray = list(fileKey.lower())
     j = 0
     append = ""
     for i in fileData:
@@ -128,17 +131,39 @@ def getChoice():
         elif usrInp == "yes" or usrInp == "Yes":
             return 1
         print("Input something valid")
+
+def getKeyChoice():
+    while True:
+        usrInp = input("Would you like a random key? (Yes/No) ")
+        if usrInp == "no" or usrInp == "No":
+            return 0
+        elif usrInp == "yes" or usrInp == "Yes":
+            return 1
+        print("Input something valid")
+
+def getRanKey():
+    ranNum = random.randint(1,10)
+    outPut = "".join(random.choices(string.ascii_uppercase + string.ascii_lowercase, k=ranNum))
+    print("Your random key is "+outPut)
+    return outPut
         
 def main():
     running = True
     while running:
-        processType = getProcessType()
         fileData = getTxtFile()
-        fileKey = getKey()
+        processType = getProcessType()
+        
+        keyChoice = getKeyChoice()
+        if keyChoice == 0:
+            fileKey = getKey()
+        elif keyChoice == 1:
+            fileKey = getRanKey()
+
         if processType == "e":
             writeOutput(encrypt(fileData, fileKey))
         else:
             writeOutput(decrypt(fileData, fileKey))
+
         choice = getChoice()
         if choice == 0:
             running = False
