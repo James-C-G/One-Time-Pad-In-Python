@@ -152,7 +152,7 @@ def main():
     while running:
         fileData = getTxtFile()
         processType = getProcessType()
-        
+        #When running keep on same text file so don't have to keep re-entering data
         keyChoice = getKeyChoice()
         if keyChoice == 0:
             fileKey = getKey()
